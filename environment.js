@@ -20,14 +20,14 @@ function init(){
     scene = new THREE.Scene();
     backgroundColor = new THREE.Color('#ffffff')
     scene.background = backgroundColor
-    var light = new THREE.HemisphereLight( 0x404040 ); // soft white light
+    var light = new THREE.DirectionalLight( 0x404040 ); // soft white light
     scene.add(light)
 
     
 
     creature = new Creature();
-    
-    scene.add(creature.obj)
+
+    scene.add(creature.geometry)
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
 
