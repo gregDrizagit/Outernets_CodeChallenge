@@ -4,6 +4,7 @@ let camera, scene, renderer;
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 let object; 
+let targetMesh;
     
 init();
 // animate();
@@ -31,15 +32,24 @@ function init(){
 
     planeMesh.position.set(0, 0, -100)
     pointLight.position.set( 0, 0, 5 );
+
+    let targetGeometry = new THREE.BoxGeometry(1, 1, 1)
+    let targetMaterial = new THREE.MeshPhongMaterial( { color: 0x5ee40 } );
+    targetMesh = new THREE.Mesh(targetGeometry, targetMaterial)
+    targetMesh.position.set(-10, 0, -99)
+    
+    scene.add(targetMesh)
     scene.add(planeMesh)
     scene.add(ambientLight)
     scene.add(pointLight)
 
     
 
-    creature = new Creature(5, 5, );
+    creature = new Creature(new THREE.Vector3(5, 5, -99));
 
     scene.add(creature.mesh)
+
+
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.shadowMap.enabled = true
@@ -57,6 +67,8 @@ function render() {
     //     console.log(alert("You scared the fish"))
     // }
     creature.swim()
+    creature.update()
+    creature.draw()
     renderer.render( scene, camera );
 
 }
