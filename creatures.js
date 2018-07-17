@@ -1,7 +1,7 @@
  class Creature {
 
     constructor(){
-       this.geometry = this.createGeometry()
+       this.mesh = this.createGeometry()
        return this
     }
 
@@ -29,7 +29,8 @@
         hand.position.y = 5;
 
         var armSkeleton = new THREE.Skeleton( bones );
-        var geometry = new THREE.CylinderGeometry( 5, 5, 5, 5, 15, 5, 30 );
+        var geometry = new THREE.CylinderGeometry( 1, 1, 1, 1, 15, 5, 30 );
+        let geometry = new THREE.BoxGeometry(1,1,1)
         console.log(armSkeleton)
         // for ( var i = 0; i < geometry.vertices.length; i ++ ) {
 
@@ -48,11 +49,12 @@
 
 
 
-        let material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
-        var mesh = new THREE.SkinnedMesh( geometry, material );
+        let material = new THREE.MeshPhongMaterial( { color: 0x5eff40 } );
+        // var mesh = new THREE.SkinnedMesh( geometry, material );
+        let mesh = new THREE.Mesh(geometry, material)
 
-        mesh.add(armSkeleton.bones[0])
-        mesh.bind(armSkeleton)
+        // mesh.add(armSkeleton.bones[0])
+        // mesh.bind(armSkeleton)
         console.log(mesh)
         return mesh
         // return new THREE.Mesh(mesh, material);
@@ -67,7 +69,10 @@
     }
 
     swim(){
-        this.geometry.position.z -= 0.005;
+        // this.mesh.position.z -= 0.005;
+        this.mesh.rotation.x += 0.005; 
+        this.mesh.rotation.y += 0.005; 
+
     
     }
 

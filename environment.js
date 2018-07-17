@@ -13,24 +13,29 @@ function init(){
     container = document.createElement('div')
     document.body.appendChild(container)
 
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+    camera = new THREE.PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 1000 );
     
     camera.position.z = 5;
 
     scene = new THREE.Scene();
-    backgroundColor = new THREE.Color('#ffffff')
-    scene.background = backgroundColor
-    var light = new THREE.DirectionalLight( 0x404040 ); // soft white light
-    scene.add(light)
+    // backgroundColor = new THREE.Color('#000000')
+    // scene.background = backgroundColor
+    let ambientLight = new THREE.AmbientLight( 0xffffff, 1 ); // soft white light
+    let pointLight = new THREE.PointLight(0xffffff, 1, 100 ); 
+    pointLight.position.set( 0, 0, 5 );
+
+    scene.add(ambientLight)
+    scene.add(pointLight)
 
     
 
     creature = new Creature();
 
-    scene.add(creature.geometry)
+    scene.add(creature.mesh)
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
-
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.BasicShadowMap
     container.appendChild( renderer.domElement );
 
 
@@ -45,3 +50,6 @@ function render() {
     renderer.render( scene, camera );
 
 }
+
+
+
