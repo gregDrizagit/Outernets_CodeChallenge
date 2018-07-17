@@ -29,7 +29,7 @@
         hand.position.y = 5;
 
         var armSkeleton = new THREE.Skeleton( bones );
-        var geometry = new THREE.CylinderGeometry( 1, 1, 1, 1, 15, 5, 30 );
+        // var geometry = new THREE.CylinderGeometry(  5, 5, 20, 32  );
         let geometry = new THREE.BoxGeometry(1,1,1)
         console.log(armSkeleton)
         // for ( var i = 0; i < geometry.vertices.length; i ++ ) {
@@ -60,13 +60,6 @@
         // return new THREE.Mesh(mesh, material);
     }
 
-    calculateSkinIndex(){
-
-    }
-
-    calculateSkinWeight(){
-
-    }
 
     swim(){
         // this.mesh.position.z -= 0.005;

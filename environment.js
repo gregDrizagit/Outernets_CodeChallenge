@@ -41,12 +41,14 @@ function init(){
 
 }
 
-
 function render() {
     requestAnimationFrame( render );
+    
 
-     creature.swim()
-
+    if(volume > 100){
+        console.log(alert("You scared the fish"))
+    }
+    creature.swim()
     renderer.render( scene, camera );
 
 }
