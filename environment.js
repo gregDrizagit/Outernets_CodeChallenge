@@ -18,18 +18,26 @@ function init(){
     camera.position.z = 5;
 
     scene = new THREE.Scene();
-    // backgroundColor = new THREE.Color('#000000')
-    // scene.background = backgroundColor
+    backgroundColor = new THREE.Color('#d6d6d6')
+    scene.background = backgroundColor
     let ambientLight = new THREE.AmbientLight( 0xffffff, 1 ); // soft white light
     let pointLight = new THREE.PointLight(0xffffff, 1, 100 ); 
-    pointLight.position.set( 0, 0, 5 );
+    let plane = new THREE.PlaneBufferGeometry( 50, 50, 100, 100 );
+    const planeMaterial = new THREE.MeshPhongMaterial({
+        color: 0xffff00,
+        transparent: true
+      })
+    let planeMesh = new THREE.Mesh(plane, planeMaterial)
 
+    planeMesh.position.set(0, 0, -100)
+    pointLight.position.set( 0, 0, 5 );
+    scene.add(planeMesh)
     scene.add(ambientLight)
     scene.add(pointLight)
 
     
 
-    creature = new Creature();
+    creature = new Creature(5, 5, );
 
     scene.add(creature.mesh)
     renderer = new THREE.WebGLRenderer();
@@ -45,9 +53,9 @@ function render() {
     requestAnimationFrame( render );
     
 
-    if(volume > 100){
-        console.log(alert("You scared the fish"))
-    }
+    // if(volume > 100){
+    //     console.log(alert("You scared the fish"))
+    // }
     creature.swim()
     renderer.render( scene, camera );
 

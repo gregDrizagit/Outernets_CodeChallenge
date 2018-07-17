@@ -1,72 +1,58 @@
  class Creature {
 
-    constructor(){
+    constructor(position){
+       this.position = new THREE.Vector3(position.x, position.y, position.z)
+       this.velocity = new THREE.Vector3(0, 0, 0)
+       this.acceleration = new THREE.Vector3()
+       this.desired = new THREE.Vector3()
+       this.steer = new THREE.Vector3()
        this.mesh = this.createGeometry()
+
        return this
     }
 
 
     createGeometry(){
 
-        // let geometry = new THREE.SphereGeometry( 1, 32, 32 )
-
-
-        var bones = [];
-
-        var shoulder = new THREE.Bone();
-        var elbow = new THREE.Bone();
-        var hand = new THREE.Bone();
-
-        shoulder.add( elbow );
-        elbow.add( hand );
-
-        bones.push( shoulder );
-        bones.push( elbow );
-        bones.push( hand );
-
-        shoulder.position.y = -5;
-        elbow.position.y = 0;
-        hand.position.y = 5;
-
-        var armSkeleton = new THREE.Skeleton( bones );
-        // var geometry = new THREE.CylinderGeometry(  5, 5, 20, 32  );
-        let geometry = new THREE.BoxGeometry(1,1,1)
-        console.log(armSkeleton)
-        // for ( var i = 0; i < geometry.vertices.length; i ++ ) {
-
-        //     var skinIndex = calculateSkinIndex( geometry.vertices, i );
-        //     var skinWeight = calculateSkinWeight( geometry.vertices, i );
-
-        //     
-
-        // }
-
-        // geometry.vertices.forEach(vert => {
-        //     console.log(vert)
-        //     geometry.skinIndices.push( new THREE.Vector4( skinIndex, skinIndex + 1, 0, 0 ) );
-        //     geometry.skinWeights.push( new THREE.Vector4( 1 - skinWeight, skinWeight, 0, 0 ) );
-        // })
-
-
-
+        let geometry = new THREE.ConeGeometry(3, 5, 7 )
         let material = new THREE.MeshPhongMaterial( { color: 0x5eff40 } );
-        // var mesh = new THREE.SkinnedMesh( geometry, material );
         let mesh = new THREE.Mesh(geometry, material)
+        mesh.position.x = this.position.x
+        mesh.position.y = this.position.y
+        mesh.position.z = this.position.z
 
-        // mesh.add(armSkeleton.bones[0])
-        // mesh.bind(armSkeleton)
-        console.log(mesh)
         return mesh
-        // return new THREE.Mesh(mesh, material);
     }
+
+    applyForce (force) {
+        this.acceleration.add(force)
+      }
 
 
     swim(){
-        // this.mesh.position.z -= 0.005;
-        this.mesh.rotation.x += 0.005; 
-        this.mesh.rotation.y += 0.005; 
 
+        // if (!target.x || !target.y) return
     
+        // A vector pointing from the position to the target
+        // this.desired.subVectors(target, this.position)
+    
+        // // Normalize the direction and scale to max speed
+        // this.desired.normalize()
+        // this.desired.multiplyScalar(1)
+    
+        // // Steering = Desired minus velocity
+        // this.steer.subVectors(this.desired, this.velocity)
+        // this.steer.clampScalar(-this.maxforce, this.maxforce)
+    
+        // // Apply the steering force to the acceleration
+        // this.applyForce(this.steer)
+
+        this.mesh.position.z -= 0.05
+          
+    }
+
+    flee(){
+
     }
 
 
