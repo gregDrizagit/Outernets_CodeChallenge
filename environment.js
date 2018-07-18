@@ -56,8 +56,8 @@ function init(){
     renderer.shadowMap.type = THREE.BasicShadowMap
     container.appendChild( renderer.domElement );
 
-
 }
+
 
 function render() {
     requestAnimationFrame( render );
