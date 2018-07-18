@@ -5,6 +5,8 @@ let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 let object; 
 let targetMesh;
+let creatures = []
+let numCreatures = 5
     
 init();
 // animate();
@@ -44,10 +46,14 @@ function init(){
     scene.add(pointLight)
 
     
+    
+    for(let i = 0; i < numCreatures; i++){
 
-    creature = new Creature(new THREE.Vector3(5, 5, -99));
+        let newCreature = new Creature(new THREE.Vector3(5, 5, -99))
+        creatures.push(newCreature)
+        scene.add(newCreature.mesh)
 
-    scene.add(creature.mesh)
+    }
 
 
     renderer = new THREE.WebGLRenderer();
@@ -63,12 +69,15 @@ function render() {
     requestAnimationFrame( render );
     
 
-    // if(volume > 100){
-    //     console.log(alert("You scared the fish"))
-    // }
-    creature.swim()
-    creature.update()
-    creature.draw()
+    if(volume > 100){
+        console.log(alert("You scared the fish"))
+    }
+
+    for(let i = 0; i < creatures.length; i++){
+        creatures[i].applyBehavior()
+        creatures[i].update()
+        creatures[i].draw()
+    }
     renderer.render( scene, camera );
 
 }
