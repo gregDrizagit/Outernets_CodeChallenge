@@ -6,7 +6,7 @@ let windowHalfY = window.innerHeight / 2;
 let object; 
 let targetMesh;
 let creatures = []
-let numCreatures = 5
+let numCreatures = 7
     
 init();
 // animate();

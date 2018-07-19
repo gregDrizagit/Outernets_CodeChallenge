@@ -4,7 +4,7 @@ const vec3 = () => new THREE.Vector3()
 
     constructor(position){
        this.maxspeed =  Math.random() / 2
-       this.maxforce =  0.005
+       this.maxforce =  0.003
        this.position = new THREE.Vector3(position.x, position.y, position.z)
        this.velocity = new THREE.Vector3(this.maxspeed, 0, 0)
        this.acceleration = new THREE.Vector3()
@@ -12,12 +12,12 @@ const vec3 = () => new THREE.Vector3()
        this.steer = new THREE.Vector3()
        this.mesh = this.createGeometry(position.x, position.y, position.z)
        this.target = new THREE.Vector3()
-       this.radius = 15
+       this.radius = 10
 
        this.wanderAngle = 0
-       this.wanderDistance = 30;
-       this.wanderRadius = 20;
-       this.wanderRange = 5;
+       this.wanderDistance = 18;
+       this.wanderRadius = 5;
+       this.wanderRange = 10;
       
        return this
     }
@@ -98,7 +98,7 @@ const vec3 = () => new THREE.Vector3()
         const seek = this.seek()
 
         // Weight forces
-        separate.multiplyScalar(3) // more important
+        separate.multiplyScalar(5) // more important
         seek.multiplyScalar(0.5) // less important
 
         this.applyForce(separate)
@@ -122,6 +122,10 @@ const vec3 = () => new THREE.Vector3()
         // console.log(this.steer)
         // // Apply the steering force to the acceleration
        return this.steer
+
+    }
+
+    oscilate(){
 
     }
 
