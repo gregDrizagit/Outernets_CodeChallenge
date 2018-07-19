@@ -4,8 +4,7 @@ const vec3 = () => new THREE.Vector3()
 
     constructor(position){
 
-       this.moveSpeeds = [0.3, 0.4, 0.08, 0.05, 0.2, 0.06]
-       this.maxspeed =  this.moveSpeeds[Math.floor(Math.random() * this.moveSpeeds.length)]
+       this.maxspeed =  this.setRandomSpeed()
        this.maxforce =  0.006
        this.position = new THREE.Vector3(position.x, position.y, position.z)
        this.velocity = new THREE.Vector3(this.maxspeed, 0, 0)
@@ -96,13 +95,23 @@ const vec3 = () => new THREE.Vector3()
        
     }
 
+    setRandomSpeed(){
+        let moveSpeeds = [0.3, 0.4, 0.08, 0.05, 0.2, 0.06]
+        return moveSpeeds[Math.floor(Math.random() * moveSpeeds.length)]
+    }
+
+    resetRandomSpeed(){
+        let moveSpeeds = [0.3, 0.4, 0.08, 0.05, 0.2, 0.06]
+        this.maxspeed = moveSpeeds[Math.floor(Math.random() * moveSpeeds.length)]
+    }
+
     applyBehavior(){
 
         if(isFleeing){
-            this.target.copy(targetMesh.position)
-            this.maxspeed = 0.9
+            this.target.copy(this.findClosestTarget())
+            this.maxspeed = 5
             const seek = this.seek()
-            seek.multiplyScalar(5)
+            // seek.multiplyScalar(5)
             this.applyForce(seek)
 
         }else{
@@ -116,8 +125,25 @@ const vec3 = () => new THREE.Vector3()
             this.applyForce(seek)
         }
 
-         
-        
+    }
+
+    findClosestTarget(){
+
+        let closestTarget; 
+
+        closestTarget = targets[0]
+
+        targets.forEach(target => {
+
+            if(this.position.distanceTo(target.position) < this.position.distanceTo(closestTarget.position))
+            {
+                closestTarget = target
+            }
+
+        })  
+
+        return closestTarget.position
+
     }
 
 
