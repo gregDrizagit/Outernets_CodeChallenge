@@ -3,7 +3,7 @@ const vec3 = () => new THREE.Vector3()
  class Creature {
 
     constructor(position){
-       this.maxspeed =  Math.random() / 2
+       this.maxspeed =  0.08
        this.maxforce =  0.003
        this.position = new THREE.Vector3(position.x, position.y, position.z)
        this.velocity = new THREE.Vector3(this.maxspeed, 0, 0)
@@ -71,6 +71,7 @@ const vec3 = () => new THREE.Vector3()
             if(distance > 0 && distance <= this.radius){
                 const diff = vec3().subVectors(this.position, otherCreature.position)
                 diff.normalize()
+                diff.divideScalar(distance)
                 sum.add(diff)
                 count++; 
             }
@@ -94,15 +95,28 @@ const vec3 = () => new THREE.Vector3()
     }
 
     applyBehavior(){
-        const separate = this.separate()
-        const seek = this.seek()
 
-        // Weight forces
-        separate.multiplyScalar(5) // more important
-        seek.multiplyScalar(0.5) // less important
+        if(isFleeing){
+            this.target.copy(targetMesh.position)
+            this.maxspeed = 0.9
+            const seek = this.seek()
+            seek.multiplyScalar(5)
+            this.applyForce(seek)
 
-        this.applyForce(separate)
-        this.applyForce(seek)
+        }else{
+
+            this.target = new THREE.Vector3()
+            this.maxspeed = 0.08; 
+            const separate = this.separate(); 
+            const seek = this.seek()
+            separate.multiplyScalar(5) // more important
+            seek.multiplyScalar(0.9) 
+            this.applyForce(separate)
+            this.applyForce(seek)
+        }
+
+         
+        
     }
 
 
@@ -111,10 +125,12 @@ const vec3 = () => new THREE.Vector3()
         // if (!target.x || !target.y) return
     
         // A vector pointing from the position to the target
-        this.wander()
+        if(!isFleeing){
+            this.wander()
+        }
         this.desired.subVectors(this.target, this.position)
         this.desired.normalize()
-        this.desired.multiplyScalar(1)
+        this.desired.multiplyScalar(1)//1
     
         // // Steering = Desired minus velocity
         this.steer.subVectors(this.desired, this.velocity)
@@ -124,6 +140,7 @@ const vec3 = () => new THREE.Vector3()
        return this.steer
 
     }
+
 
     oscilate(){
 

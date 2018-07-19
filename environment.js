@@ -7,6 +7,7 @@ let object;
 let targetMesh;
 let creatures = []
 let numCreatures = 7
+let isFleeing = false; 
     
 init();
 // animate();
@@ -65,12 +66,17 @@ function init(){
 }
 
 
+
+
 function render() {
     requestAnimationFrame( render );
     
-
     if(volume > 100){
-        console.log(alert("You scared the fish"))
+        isFleeing = true; 
+        setTimeout(function(){ 
+             isFleeing = false;
+        }, 10000);
+
     }
 
     for(let i = 0; i < creatures.length; i++){
