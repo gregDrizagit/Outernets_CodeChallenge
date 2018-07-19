@@ -34,7 +34,7 @@ function init(){
     let planeMesh = new THREE.Mesh(plane, planeMaterial)
 
     planeMesh.position.set(0, 0, -100)
-    pointLight.position.set( 0, 0, 5 );
+    pointLight.position.set( 0, 0, -90 );
 
     let targetGeometry = new THREE.BoxGeometry(1, 1, 1)
     let targetMaterial = new THREE.MeshPhongMaterial( { color: 0x5ee40 } );
@@ -42,7 +42,7 @@ function init(){
     targetMesh.position.set(-10, 0, -99)
     
     scene.add(targetMesh)
-    scene.add(planeMesh)
+    // scene.add(planeMesh)
     scene.add(ambientLight)
     scene.add(pointLight)
 
@@ -50,7 +50,12 @@ function init(){
     
     for(let i = 0; i < numCreatures; i++){
 
-        let newCreature = new Creature(new THREE.Vector3(5, 5, -99))
+        let randomX = Math.floor(Math.random() * 100) 
+        let randomY = Math.floor(Math.random() * 100)
+        console.log(randomX, randomY)
+
+        let randomStartingPosition = new THREE.Vector3(randomX, randomY, 0)
+        let newCreature = new Creature(new THREE.Vector3(randomStartingPosition.x, randomStartingPosition.y, -99))
         creatures.push(newCreature)
         scene.add(newCreature.mesh)
 

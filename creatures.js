@@ -3,8 +3,10 @@ const vec3 = () => new THREE.Vector3()
  class Creature {
 
     constructor(position){
-       this.maxspeed =  0.08
-       this.maxforce =  0.003
+
+       this.moveSpeeds = [0.3, 0.4, 0.08, 0.05, 0.2, 0.06]
+       this.maxspeed =  this.moveSpeeds[Math.floor(Math.random() * this.moveSpeeds.length)]
+       this.maxforce =  0.006
        this.position = new THREE.Vector3(position.x, position.y, position.z)
        this.velocity = new THREE.Vector3(this.maxspeed, 0, 0)
        this.acceleration = new THREE.Vector3()
@@ -15,9 +17,9 @@ const vec3 = () => new THREE.Vector3()
        this.radius = 10
 
        this.wanderAngle = 0
-       this.wanderDistance = 18;
-       this.wanderRadius = 5;
-       this.wanderRange = 10;
+       this.wanderDistance = 40;
+       this.wanderRadius = 15;
+       this.wanderRange = 100;
       
        return this
     }
@@ -56,7 +58,7 @@ const vec3 = () => new THREE.Vector3()
     
         this.wanderAngle += Math.random() * this.wanderRange - this.wanderRange * .5;
         center.add(offset)
-        center.setZ(0)
+        // center.setX(0)
         this.target.copy(center)
 
     }
@@ -106,11 +108,10 @@ const vec3 = () => new THREE.Vector3()
         }else{
 
             this.target = new THREE.Vector3()
-            this.maxspeed = 0.08; 
             const separate = this.separate(); 
             const seek = this.seek()
-            separate.multiplyScalar(5) // more important
-            seek.multiplyScalar(0.9) 
+            separate.multiplyScalar(3) // more important
+            seek.multiplyScalar(1) 
             this.applyForce(separate)
             this.applyForce(seek)
         }
