@@ -1,5 +1,5 @@
 const vec3 = () => new THREE.Vector3()
-const moveSpeeds = [0.3, 0.4, 0.08, 0.05, 0.2, 0.06]
+const moveSpeeds = [0.1, 0.3, 0.08, 0.08, 0.2, 0.09]
 
  class Creature {
 
@@ -7,7 +7,7 @@ const moveSpeeds = [0.3, 0.4, 0.08, 0.05, 0.2, 0.06]
 
         //seek params
        this.maxspeed =  this.setRandomSpeed()
-       this.maxforce =  0.006
+       this.maxforce =  0.008
        this.position = new THREE.Vector3(position.x, position.y, position.z)
        this.velocity = new THREE.Vector3(this.maxspeed, 0, 0)
        this.acceleration = new THREE.Vector3()
@@ -18,7 +18,7 @@ const moveSpeeds = [0.3, 0.4, 0.08, 0.05, 0.2, 0.06]
        this.radius = 10
        //Wander params
        this.wanderAngle = 0
-       this.wanderDistance = 40
+       this.wanderDistance = 45
        this.wanderRadius = 15
        this.wanderRange = 100
       
@@ -42,6 +42,8 @@ const moveSpeeds = [0.3, 0.4, 0.08, 0.05, 0.2, 0.06]
 
     update () {
 
+        //update applies all of the computer forces
+
         this.velocity.add(this.acceleration)
         this.velocity.clampScalar(-this.maxspeed, this.maxspeed)
         this.position.add(this.velocity)
@@ -54,12 +56,13 @@ const moveSpeeds = [0.3, 0.4, 0.08, 0.05, 0.2, 0.06]
     }
 
     wander () {
-        //
+        //Wander sets new random directions for the creature to move in. 
+        //adapted from https://slsdo.github.io/steering-behaviors/
         var center = this.velocity.clone().normalize().setLength(this.wanderDistance)
         var offset = new THREE.Vector3(1, 1, 1)
         offset.setLength(this.wanderRadius)
         offset.x = Math.sin(this.wanderAngle) * offset.length()
-        offset.z = Math.cos(this.wanderAngle) * offset.length()
+        // offset.z = Math.cos(this.wanderAngle) * offset.length()
         offset.y = Math.sin(this.wanderAngle) * offset.length()
     
         this.wanderAngle += Math.random() * this.wanderRange - this.wanderRange * .5

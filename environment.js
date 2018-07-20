@@ -7,7 +7,7 @@ let object;
 
 let targets = []
 let creatures = []
-let numCreatures = 20
+let numCreatures = 10
 let numShelters = 2
 let isFleeing = false; 
     
@@ -26,7 +26,7 @@ function init(){
     camera.position.z = 5 //position the camera above the scene. 
 
     scene = new THREE.Scene()
-    backgroundColor = new THREE.Color('#d6d6d6')
+    backgroundColor = new THREE.Color('#74839b')
     scene.background = backgroundColor
     //create the lights in the scene 
     let ambientLight = new THREE.AmbientLight( 0xffffff, 1 ) // soft white light
@@ -37,9 +37,8 @@ function init(){
     scene.add(ambientLight)
     scene.add(pointLight)
 
-    generateShelters()
+    generateTargets()
    
-
     for(let i = 0; i < numCreatures; i++){
 
         let randomX = Math.floor(Math.random() * 50) 
@@ -59,10 +58,10 @@ function init(){
 
 }
 
-function generateShelters(){
+function generateTargets(){
 
-    //generate Shelters creates 4 targets that the creatures will swim to when they're fleeing. 
-    //THe shelters are manually placed off screen.
+    //generateTargets creates 4 targets that the creatures will swim to when they're fleeing. 
+    //THe targets are manually placed off screen.
    
     let targetGeometry = new THREE.BoxGeometry(1, 1, 1)
     let targetMaterial = new THREE.MeshBasicMaterial( { color: 0x5ee40 } );
